@@ -24,18 +24,49 @@ struct Solution;
 
 impl AddTwoNumbers for Solution {
     fn solution(l1: Option<Box<ListNode>>, l2: Option<Box<ListNode>>) -> Option<Box<ListNode>> {
-        let carry = 0;
-        let result = ListNode::new(0);
+        let mut carry = 0;
+        let mut head = None;
+        let mut result: Option<Box<ListNode>> = None;
 
-        let p1 = &l1;
-        let p2 = &l2;
+        let (mut p1,  mut p2) = (l1, l2);
 
-        while *p1 != None && *p2 != None {
-            let sum = carry;
+        while p1.is_some() || p2.is_some() {
+            let mut sum = carry;
 
-            if let Some(val1) = *p1 {}
+            if let Some(node) = p1.clone() {
+                sum += node.val;
+                p1 = node.next;
+            }
+
+            if let Some(node) = p2.clone() {
+                sum += node.val;
+                p2 = node.next;
+            }
+
+            if sum > 9 {
+                carry = 1;
+                sum = sum - 10;
+            } else {
+                carry = 0;
+            }
+
+            if let Some(node) = result.as_mut() {
+                node.next = Some(Box::new(ListNode::new(sum)));
+                result = node.next.clone();
+            } else {
+                result = Some(Box::new(ListNode::new(sum)));
+                head = result.clone();
+            }
         }
-        None
+
+        if carry > 0 {
+            if let Some(node) = result.as_mut() {
+                node.next = Some(Box::new(ListNode::new(carry)));
+            } else {
+                result = Some(Box::new(ListNode::new(carry)));
+            } 
+        }
+        head
     }
 }
 

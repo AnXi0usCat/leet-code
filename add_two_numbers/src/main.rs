@@ -1,5 +1,3 @@
-use std::cell::RefCell;
-
 fn main() {
     println!("Add two numbers");
 }
@@ -50,7 +48,6 @@ impl AddTwoNumbers for Solution {
             } else {
                 carry = 0;
             }
-
 
             *head = Some(Box::new(ListNode::new(sum)));
             head = &mut head.as_mut().unwrap().next;

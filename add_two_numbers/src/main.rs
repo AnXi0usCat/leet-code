@@ -1,3 +1,5 @@
+use std::cell::RefCell;
+
 fn main() {
     println!("Add two numbers");
 }
@@ -25,20 +27,19 @@ struct Solution;
 impl AddTwoNumbers for Solution {
     fn solution(l1: Option<Box<ListNode>>, l2: Option<Box<ListNode>>) -> Option<Box<ListNode>> {
         let mut carry = 0;
-        let mut head = None;
         let mut result: Option<Box<ListNode>> = None;
+        let mut head = &mut result;
 
         let (mut p1,  mut p2) = (l1, l2);
-
         while p1.is_some() || p2.is_some() {
             let mut sum = carry;
 
-            if let Some(node) = p1.clone() {
+            if let Some(node) = p1 {
                 sum += node.val;
                 p1 = node.next;
             }
 
-            if let Some(node) = p2.clone() {
+            if let Some(node) = p2 {
                 sum += node.val;
                 p2 = node.next;
             }
@@ -50,23 +51,16 @@ impl AddTwoNumbers for Solution {
                 carry = 0;
             }
 
-            if let Some(node) = result.as_mut() {
-                node.next = Some(Box::new(ListNode::new(sum)));
-                result = node.next.clone();
-            } else {
-                result = Some(Box::new(ListNode::new(sum)));
-                head = result.clone();
-            }
+
+            *head = Some(Box::new(ListNode::new(sum)));
+            head = &mut head.as_mut().unwrap().next;
         }
 
         if carry > 0 {
-            if let Some(node) = result.as_mut() {
-                node.next = Some(Box::new(ListNode::new(carry)));
-            } else {
-                result = Some(Box::new(ListNode::new(carry)));
-            } 
+            *head = Some(Box::new(ListNode::new(carry)));
         }
-        head
+
+        result
     }
 }
 
@@ -159,7 +153,7 @@ mod test {
                                     val: 0,
                                     next: Some(Box::new(ListNode {
                                         val: 0,
-                                        next: Some(Box::new(ListNode { val: 0, next: None }))
+                                        next: Some(Box::new(ListNode { val: 1, next: None }))
                                     }))
                                 }))
                             }))

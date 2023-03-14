@@ -25,11 +25,11 @@ impl Solution for SlidingWindow {
         while start < str_len && end < str_len {
             if !repeated_chars.contains(&s_bytes[end]) {
                 repeated_chars.insert(s_bytes[end]);
-                end +=1;
+                end += 1;
                 max_len = max(max_len, end - start);
             } else {
                 repeated_chars.remove(&s_bytes[start]);
-                start+=1;
+                start += 1;
             }
         }
         max_len as i32

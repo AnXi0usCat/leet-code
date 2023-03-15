@@ -7,6 +7,7 @@ trait Solution {
 }
 
 struct CheatingSolution;
+struct BinarySearch;
 
 impl Solution for CheatingSolution {
     fn solution(nums1: Vec<i32>, nums2: Vec<i32>) -> f64 {
@@ -27,6 +28,12 @@ impl Solution for CheatingSolution {
             median = nums1_mut[num_len / 2] as f64;
         }
         median
+    }
+}
+
+impl Solution for BinarySearch {
+    fn solution(nums1: Vec<i32>, nums2: Vec<i32>) -> f64 {
+        todo!()
     }
 }
 

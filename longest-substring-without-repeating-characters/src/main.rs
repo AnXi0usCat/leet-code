@@ -35,3 +35,26 @@ impl Solution for SlidingWindow {
         max_len as i32
     }
 }
+
+#[cfg(test)]
+mod test {
+    use super::*;
+   
+    #[test]
+    fn solution_1() {
+        let input = String::from("bbbb");
+        assert_eq!(SlidingWindow::solution(input), 1);
+    }
+
+    #[test]
+    fn solution_2() {
+        let input = String::from("pwwkew");
+        assert_eq!(SlidingWindow::solution(input), 3);
+    }
+
+    #[test]
+    fn solution_3() {
+        let input = String::from("abcabcbb");
+        assert_eq!(SlidingWindow::solution(input), 3);
+    }
+}

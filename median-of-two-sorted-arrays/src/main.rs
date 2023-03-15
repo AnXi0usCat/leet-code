@@ -26,7 +26,6 @@ impl Solution for CheatingSolution {
         } else {
             median = nums1_mut[num_len / 2] as f64;
         }
-
         median
     }
 }

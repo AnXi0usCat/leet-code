@@ -7,7 +7,7 @@ trait Solution {
 }
 
 struct CheatingSolution;
-struct BinarySearch;
+struct ComplexityONPlusM;
 
 impl Solution for CheatingSolution {
     fn solution(nums1: Vec<i32>, nums2: Vec<i32>) -> f64 {
@@ -31,9 +31,46 @@ impl Solution for CheatingSolution {
     }
 }
 
-impl Solution for BinarySearch {
+impl Solution for ComplexityONPlusM {
     fn solution(nums1: Vec<i32>, nums2: Vec<i32>) -> f64 {
-        todo!()
+        let n1 = nums1.len();
+        let n2 = nums2.len();
+        let n = n1 + n2;
+        let mut new_nums = vec![0; n];
+
+        let (mut i, mut j, mut k) = (0, 0, 0);
+
+        while i < n1 && j < n2 {
+            if i == n1 {
+                while j < n2 {
+                    new_nums[k] = nums2[j];
+                    k += 1;
+                    j += 1;
+                }
+            } else if j == n2 {
+                while i < n1 {
+                    new_nums[k] = nums1[i];
+                    k += 1;
+                    i += 1;
+                }
+            }
+
+            if nums1[i] < nums2[j] {
+                new_nums[k] = nums1[i];
+                k += 1;
+                i += 1;
+            } else {
+                new_nums[k] = nums2[j];
+                k += 1;
+                j += 1;
+            }
+        }
+
+        let quotient = n / 2;
+        if n % 2 == 0 {
+            return (new_nums[quotient - 1] as f64 + new_nums[quotient] as f64) / 2.0;
+        }
+        new_nums[n / 2] as f64
     }
 }
 
@@ -53,5 +90,19 @@ mod test {
         let in1 = vec![1, 2];
         let in2 = vec![3, 4];
         assert_eq!(CheatingSolution::solution(in1, in2), 2.5 as f64);
+    }
+
+    #[test]
+    fn solution_3() {
+        let in1 = vec![1, 3];
+        let in2 = vec![2];
+        assert_eq!(ComplexityONPlusM::solution(in1, in2), 2 as f64);
+    }
+
+    #[test]
+    fn solution_4() {
+        let in1 = vec![1, 2];
+        let in2 = vec![3, 4];
+        assert_eq!(ComplexityONPlusM::solution(in1, in2), 2.5 as f64);
     }
 }

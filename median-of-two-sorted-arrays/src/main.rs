@@ -40,22 +40,23 @@ impl Solution for ComplexityONPlusM {
 
         let (mut i, mut j, mut k) = (0, 0, 0);
 
-        while i < n1 && j < n2 {
+        while i <= n1 && j <= n2 {
             if i == n1 {
                 while j < n2 {
                     new_nums[k] = nums2[j];
                     k += 1;
                     j += 1;
                 }
+                break;
             } else if j == n2 {
                 while i < n1 {
                     new_nums[k] = nums1[i];
                     k += 1;
                     i += 1;
                 }
+                break;
             }
-
-            if nums1[i] < nums2[j] {
+            if nums1[i] <= nums2[j] {
                 new_nums[k] = nums1[i];
                 k += 1;
                 i += 1;

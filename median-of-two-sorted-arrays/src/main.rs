@@ -25,7 +25,7 @@ impl Solution for CheatingSolution {
         if num_len % 2 == 0 {
             median = (nums1_mut[quotient - 1] as f64 + nums1_mut[quotient] as f64) / 2.0;
         } else {
-            median = nums1_mut[num_len / 2] as f64;
+            median = nums1_mut[quotient] as f64;
         }
         median
     }
@@ -70,7 +70,7 @@ impl Solution for ComplexityONPlusM {
         if n % 2 == 0 {
             return (new_nums[quotient - 1] as f64 + new_nums[quotient] as f64) / 2.0;
         }
-        new_nums[n / 2] as f64
+        new_nums[quotient] as f64
     }
 }
 

@@ -102,20 +102,20 @@ impl Solution for BinarySearch {
             let i = (l + r) / 2;
             let j = half - i - 2;
 
-            let a_left = a[i];
-            let a_right = a[i + 1];
-            let b_left = b[j];
-            let b_right = b[j + 1];
+            let a_left = *a.get(i).unwrap_or(&i32::MIN); 
+            let a_right = *a.get(i + 1).unwrap_or(&i32::MAX);
+            let b_left = *b.get(j).unwrap_or(&i32::MIN);
+            let b_right = *b.get(j + 1).unwrap_or(&i32::MAX);
 
-            if a_right <= b_left && b_right <= b_left {
+            if a_left <= b_right && a_right <= b_left {
                 if n % 2 == 0 {
-                    return max(a_left, b_left) as f64 + min(a_right, b_right) as f64 / 2.0;
+                    return (max(a_left, b_left) as f64 + min(a_right, b_right) as f64) / 2.0;
                 }
                 return min(a_right, b_right) as f64;
             } else if a_left > b_right {
-                r += 1;
+                r = i - 1;
             } else {
-                l -= 1;
+                l = i + 1;
             }
         }
     }
@@ -151,5 +151,19 @@ mod test {
         let in1 = vec![1, 2];
         let in2 = vec![3, 4];
         assert_eq!(ComplexityONPlusM::solution(in1, in2), 2.5 as f64);
+    }
+
+    #[test]
+    fn solution_5() {
+        let in1 = vec![1, 3];
+        let in2 = vec![2];
+        assert_eq!(BinarySearch::solution(in1, in2), 2 as f64);
+    }
+
+    #[test]
+    fn solution_6() {
+        let in1 = vec![1, 2];
+        let in2 = vec![3, 4];
+        assert_eq!(BinarySearch::solution(in1, in2), 2.5 as f64);
     }
 }

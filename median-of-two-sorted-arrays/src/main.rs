@@ -107,7 +107,7 @@ impl Solution for BinarySearch {
             let b_left = *b.get(j).unwrap_or(&i32::MIN);
             let b_right = *b.get(j + 1).unwrap_or(&i32::MAX);
 
-            if a_left <= b_right && a_right <= b_left {
+            if a_left <= b_right && b_left <= a_right {
                 if n % 2 == 0 {
                     return (max(a_left, b_left) as f64 + min(a_right, b_right) as f64) / 2.0;
                 }

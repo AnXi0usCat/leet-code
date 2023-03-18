@@ -1,3 +1,6 @@
+use std::cmp::max;
+use std::cmp::min;
+
 fn main() {
     println!("median-of-two-sorted-arrays");
 }
@@ -8,6 +11,7 @@ trait Solution {
 
 struct CheatingSolution;
 struct ComplexityONPlusM;
+struct BinarySearch;
 
 impl Solution for CheatingSolution {
     fn solution(nums1: Vec<i32>, nums2: Vec<i32>) -> f64 {
@@ -72,6 +76,48 @@ impl Solution for ComplexityONPlusM {
             return (new_nums[quotient - 1] as f64 + new_nums[quotient] as f64) / 2.0;
         }
         new_nums[quotient] as f64
+    }
+}
+
+impl Solution for BinarySearch {
+    fn solution(nums1: Vec<i32>, nums2: Vec<i32>) -> f64 {
+        let a;
+        let b;
+
+        if nums1.len() < nums2.len() {
+            a = nums1;
+            b = nums2;
+        } else {
+            a = nums2;
+            b = nums1;
+        }
+
+        let n1 = a.len();
+        let n2 = b.len();
+        let n = n1 + n2;
+        let half = n / 2;
+        let (mut l, mut r) = (0, a.len() - 1);
+
+        loop {
+            let i = (l + r) / 2;
+            let j = half - i - 2;
+
+            let a_left = a[i];
+            let a_right = a[i + 1];
+            let b_left = b[j];
+            let b_right = b[j + 1];
+
+            if a_right <= b_left && b_right <= b_left {
+                if n % 2 == 0 {
+                    return max(a_left, b_left) as f64 + min(a_right, b_right) as f64 / 2.0;
+                }
+                return min(a_right, b_right) as f64;
+            } else if a_left > b_right {
+                r += 1;
+            } else {
+                l -= 1;
+            }
+        }
     }
 }
 

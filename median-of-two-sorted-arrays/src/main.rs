@@ -81,31 +81,29 @@ impl Solution for ComplexityONPlusM {
 
 impl Solution for BinarySearch {
     fn solution(nums1: Vec<i32>, nums2: Vec<i32>) -> f64 {
-        let a;
-        let b;
+        let mut a = nums1;
+        let mut b = nums2;
 
-        if nums1.len() < nums2.len() {
-            a = nums1;
-            b = nums2;
-        } else {
-            a = nums2;
-            b = nums1;
-        }
+        if a.len() > b.len() {
+            (a, b) = (b, a);
+        } 
 
         let n1 = a.len();
         let n2 = b.len();
         let n = n1 + n2;
-        let half = n / 2;
-        let (mut l, mut r) = (0, a.len() - 1);
+        let half = (n / 2) as i32;
+        let (mut l, mut r) = (0 as i32, (a.len() - 1) as i32);
 
         loop {
-            let i = (l + r) / 2;
-            let j = half - i - 2;
+            let i: i32 = (l + r) / 2;
 
-            let a_left = *a.get(i).unwrap_or(&i32::MIN); 
-            let a_right = *a.get(i + 1).unwrap_or(&i32::MAX);
-            let b_left = *b.get(j).unwrap_or(&i32::MIN);
-            let b_right = *b.get(j + 1).unwrap_or(&i32::MAX);
+            println!("i {} j {}", i, half);
+            let j: i32 = half - i - 2;
+
+            let a_left = *a.get(i as usize).unwrap_or(&i32::MIN); 
+            let a_right = *a.get((i + 1) as usize).unwrap_or(&i32::MAX);
+            let b_left = *b.get(j as usize).unwrap_or(&i32::MIN);
+            let b_right = *b.get((j + 1) as usize).unwrap_or(&i32::MAX);
 
             if a_left <= b_right && b_left <= a_right {
                 if n % 2 == 0 {

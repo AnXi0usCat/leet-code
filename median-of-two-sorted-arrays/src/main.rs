@@ -123,6 +123,7 @@ impl Solution for BinarySearch {
                     return (max(a_left, b_left) as f64 + min(a_right, b_right) as f64) / 2.0;
                 }
                 return min(a_right, b_right) as f64;
+
             } else if a_left > b_right {
                 r = i - 1;
             } else {

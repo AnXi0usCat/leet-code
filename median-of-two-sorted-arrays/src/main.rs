@@ -96,14 +96,27 @@ impl Solution for BinarySearch {
 
         loop {
             let i: i32 = (l + r) / 2;
-
-            println!("i {} j {}", i, half);
             let j: i32 = half - i - 2;
 
-            let a_left = *a.get(i as usize).unwrap_or(&i32::MIN); 
-            let a_right = *a.get((i + 1) as usize).unwrap_or(&i32::MAX);
-            let b_left = *b.get(j as usize).unwrap_or(&i32::MIN);
-            let b_right = *b.get((j + 1) as usize).unwrap_or(&i32::MAX);
+            let a_left = match i < 0 {
+                true => i32::MIN,
+                false => a[i as usize],
+            };
+
+            let a_right = match (i + 1) as usize >= n1 {
+                true => i32::MAX,
+                false => a[(i + 1) as usize],
+            };
+
+            let b_left = match j < 0 {
+                true => i32::MIN,
+                false => b[j as usize],
+            };
+
+            let b_right = match (j + 1) as usize >= n2 {
+                true => i32::MAX,
+                false => b[(j+ 1) as usize],
+            };
 
             if a_left <= b_right && b_left <= a_right {
                 if n % 2 == 0 {
@@ -155,6 +168,7 @@ mod test {
     fn solution_5() {
         let in1 = vec![1, 3];
         let in2 = vec![2];
+        println!("weferert");
         assert_eq!(BinarySearch::solution(in1, in2), 2 as f64);
     }
 
